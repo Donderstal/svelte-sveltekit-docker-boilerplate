@@ -1,0 +1,46 @@
+# Dependencies (installed fresh in Docker)
+node_modules
+
+# SvelteKit build output & cache
+build
+.svelte-kit
+
+# Vite cache
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Environment files (secrets)
+.env
+.env.*
+!.env.example
+
+# Docker
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+
+# IDE / editor
+.vscode
+.idea
+.editorconfig
+
+# Linting / formatting
+.eslintrc*
+.prettierrc*
+.prettierignore
+.npmrc
+
+# Docs
+*.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*   
