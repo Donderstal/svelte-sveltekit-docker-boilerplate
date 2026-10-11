@@ -1,36 +1,9 @@
-# sv
+# Boilerplate template for a containerized static Svelte/Sveltekit application
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
-
-```sh
-# recreate this project
-npx sv@1.1.1 create --template minimal --types ts --install npm example-frontend
-```
-
-## Adding features
-
-Add features to your project with `sv add`:
-
-```sh
-npx sv add
-```
-
-For example, to add Tailwind CSS:
-
-```sh
-npx sv add tailwindcss
-```
+Svelte template generated using SvelteKit as per the Svelte [docs](https://svelte.dev/docs/svelte/getting-started).
+Uses the Svelte static adapter.
+Includes a Dockerfile and .dockerignore for containerization.
+Added a .env file te give an example on using .env files when building and/or running images.
 
 ## Developing
 
@@ -43,14 +16,22 @@ npm run dev
 npm run dev -- --open
 ```
 
-## Building
+## Building an image
 
-To create a production version of your app:
+Building Docker images requires [Docker Engine](https://docs.docker.com/engine/install/).
+This boilerplate expects one .env variable, API_URL. 
+The .dockerignore is configured to ignore .env files, so you need to supply .env variables manually.  
+Run the following command from the project root to build the image.
 
 ```sh
-npm run build
+docker build --build-arg API_URL=<my-value> -t <image-name> . 
 ```
 
-You can preview the production build with `npm run preview`.
+## Running the image as a container
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+After building you image, you can run it as a container.
+Run the following command from the project root to build and image
+
+```sh
+docker run -p 8080:80 <image-name> . 
+```
