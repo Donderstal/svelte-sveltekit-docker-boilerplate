@@ -1,13 +1,13 @@
-ARG API_URL='default'
+ARG API_URL
 
-# Dependencies stage
-FROM node:24-alpine AS packages
+# 1 - Dependencies stage
+FROM node:24.0.0-alpine AS packages
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
-# Build stage
-FROM node:24-alpine AS build
+# 2 - Build stage
+FROM node:24.0.0-alpine AS build
 ARG API_URL
 ENV API_URL=${API_URL}
 WORKDIR /app
@@ -15,9 +15,11 @@ WORKDIR /app
 COPY --from=packages /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
-RUN npm prune --omit=dev
 
-# Runtime stage
+# Stage 3: Runtime
 FROM nginx:alpine AS runtime
-WORKDIR /app
-COPY --from=build /app/build/. /usr/share/nginx/html/
+COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
