@@ -1,14 +1,13 @@
-import { API_URL } from '$app/env/public';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async () => {
-    const endpoint = `${API_URL}/api`
+export const load: PageLoad = async ({ fetch }) => {
+    const endpoint = `/api/example-endpoint`
     
     try {
         const res = await fetch(endpoint, {});
         if (res.ok) {
             return {
-                value: res.text()
+                value: await res.text()
             };
         }
         
